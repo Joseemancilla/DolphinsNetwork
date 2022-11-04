@@ -1,0 +1,36 @@
+---
+title: "Network_lab"
+output: word_document
+---
+
+Network Dolphins
+
+
+```{r }
+library(ggplot2)
+library (network)
+library (ggnetwork)
+library(RColorBrewer)
+data_edges= read.csv("dolphin_edges.csv")
+data_nodes= read.csv("dolphin_nodes.csv")
+
+
+net<-network(x=data_edges,vertices=data_nodes,directed=FALSE)
+n<-ggnetwork(net)
+
+
+a<-ggplot (n,aes(x=x,y=y,xend=xend,yend=yend))+
+geom_nodes(aes(size=4,shape=factor(group),color=factor(group)))+
+geom_nodelabel_repel(aes(label = label[ vertex.names ]),
+                       fontface = "bold", box.padding = unit(1, "lines"))+
+
+geom_edges()+
+scale_color_brewer(palette = "Dark2") +
+guides(size = FALSE) +
+theme_blank()
+
+
+print(a)
+```
+
+
